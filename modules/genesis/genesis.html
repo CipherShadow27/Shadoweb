@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="./modules/genesis/genesis.css">
+
+<div id="genesis-container" class="genesis-wrapper">
+    
+    <div class="genesis-visual">
+        <div class="holo-circle"></div>
+        <img id="gen-main-icon" src="" alt="Core Entity" class="floating-icon">
+    </div>
+
+    <div class="genesis-info">
+        <h1 id="gen-title">SYSTEM_READY</h1>
+        <div class="separator-line"></div>
+        
+        <div class="terminal-log-container">
+            <div class="log-header">
+                <span class="log-dot red"></span>
+                <span class="log-dot yellow"></span>
+                <span class="log-dot green"></span>
+                <span class="log-title">PERSONALITY_CORE.log</span>
+            </div>
+            <div class="log-body">
+                <span class="prompt-char">root@shadowcore:~$</span>
+                <span id="gen-quote" class="typing-text">...</span>
+                <span class="cursor-blink">_</span>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="label">CPU_CORE</span>
+                    <span class="val" id="cpu-val">--%</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">MEM_ALLOC</span>
+                    <span class="val" id="ram-val">--/--</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">NET_SEC</span>
+                    <span class="val" id="sec-val">WAITING</span>
+                </div>
+            </div>
+            </div>
+            
+            <div class="vital-monitor-container">
+                <div class="vital-label">SYSTEM_PULSE // LIVE_FEED</div>
+                <canvas id="vital-graph"></canvas>
+        </div>
+    </div>
+</div>

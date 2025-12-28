@@ -1,0 +1,59 @@
+.boot-container {
+    /* POSICIÓN "AGRESIVA" DE PANTALLA COMPLETA */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; 
+    bottom: 0; 
+    width: auto !important;
+    height: auto !important;
+    /* LIMPIEZA */
+    margin: 0 !important;
+    padding: 0 !important;
+    /*background-color: #000;*/
+    z-index: 99999; /* Capa máxima absoluta, por encima de todo */
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boot-background {
+    position: absolute;
+    width: 100%; height: 100%;
+    /* Ruta a tu background real */
+    background: url('../../../assets/img/background/bck_main.webp') no-repeat center center;
+    background-size: cover;
+    opacity: 0.2; /* Aparece sutilmente durante el boot */
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.boot-logo {
+    width: 300px;
+    height: auto;
+    animation: boot-pulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.2));
+}
+
+.boot-terminal {
+    margin-top: 30px;
+    font-family: 'Share Tech Mono', monospace;
+    color: #00f2ff;
+    font-size: 0.9rem;
+    text-align: left;
+    width: 300px;
+    min-height: 100px;
+}
+
+#boot-logs div {
+    margin-bottom: 5px;
+    opacity: 0;
+    animation: log-fade 0.5s forwards;
+}
+
+@keyframes log-fade { to { opacity: 0.7; } }
+@keyframes boot-pulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+}

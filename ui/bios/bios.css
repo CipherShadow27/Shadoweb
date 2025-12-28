@@ -1,0 +1,79 @@
+/* BIOS LAYER - HARDWARE */
+:root {
+    --color-prime: #00ff41;   /* Verde Matrix */
+    --color-xentinel: #bf00ff; /* Morado Neon */
+    --color-cypher: #ff003c;   /* Rojo cerberus */
+    --color-glass: rgba(10, 10, 15, 0.85);
+    --border-metal: #444;
+}
+
+.system-leds {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* LOS LEDs CILÍNDRICOS */
+.led-indicator {
+    position: absolute;
+    background: var(--color-glass); /* Apagado por defecto */
+    box-shadow: 0 0 5px #444 inset;
+    transition: all 1s ease;
+    z-index: 10;
+}
+
+/* Posicionamiento de LEDs centrado en los bordes */
+.led-indicator.top { 
+    top: -4px; left: 50%; transform: translateX(-50%); 
+    width: 100px; height: 8px; border-radius: 4px;
+}
+.led-indicator.bottom { 
+    bottom: -4px; left: 50%; transform: translateX(-50%); 
+    width: 100px; height: 8px; border-radius: 4px;
+}
+.led-indicator.left { 
+    left: -4px; top: 50%; transform: translateY(-50%); 
+    width: 8px; height: 100px; border-radius: 4px;
+}
+.led-indicator.right { 
+    right: -4px; top: 50%; transform: translateY(-50%); 
+    width: 8px; height: 100px; border-radius: 4px;
+}
+
+#led-status-text {
+    font-size: 0.6rem;
+    margin-left: 5px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* Estados de Color con Efecto Cristal/Cilindro */
+.active-primex { 
+    background: linear-gradient(to bottom, #fff 0%, var(--color-prime) 20%, #000 100%);
+    box-shadow: 0 0 15px var(--color-prime); 
+    animation: blink 2s infinite; 
+}
+
+.active-xentinelx { 
+    background: linear-gradient(to bottom, #fff 0%, var(--color-xentinel) 20%, #000 100%);
+    box-shadow: 0 0 15px var(--color-xentinel); 
+    animation: blink 1s infinite; 
+}
+
+.active-cypherx { 
+    background: linear-gradient(to bottom, #fff 0%, var(--color-cypher) 20%, #000 100%);
+    box-shadow: 0 0 20px var(--color-cypher); 
+    animation: blink 0.5s infinite; 
+}
+
+.active-loading {
+    background: linear-gradient(to bottom, #fff 0%, #00f2ff 20%, #000 100%);
+    box-shadow: 0 0 20px #00f2ff;
+    animation: blink 0.3s infinite !important; /* Parpadeo muy rápido */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+

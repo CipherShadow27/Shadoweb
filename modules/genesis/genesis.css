@@ -1,0 +1,232 @@
+/* GENESIS LAYOUT */
+.genesis-wrapper {
+    display: flex;
+    flex-direction: row; /* Diseño horizontal: Icono - Info */
+    align-items: center;
+    justify-content: center;
+    /* CRUCIAL: Ocupar exactamente el hueco del viewport */
+    height: 100%;
+    width: 100%;
+    color: rgba(var(--sys-primary-rgb), 0.2);
+    gap: 60px; /* Espacio entre el icono y el texto */
+    
+    /* IMPORTANTE: Evita que animaciones flotantes generen scrollbars */
+    overflow: hidden; 
+    
+    animation: fadeIn 0.8s ease-out;
+    /* Seguridad: Si la pantalla es muy bajita, permite scroll dentro del módulo */
+    overflow-y: auto; 
+    padding: 20px; /* Margen interno de seguridad */
+}
+
+/* VISUAL (Columna Izquierda - Icono) */
+.genesis-visual {
+    position: relative;
+    /* Evitamos que se encoja o crezca demasiado */
+    flex: 0 0 280px; 
+    width: 280px; 
+    height: 280px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.holo-circle {
+    position: absolute;
+    width: 100%; height: 100%;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    animation: rotateSlow 20s linear infinite;
+}
+
+.floating-icon {
+    width: 240px;
+    height: auto;
+    filter: drop-shadow(0 0 20px currentColor);
+    animation: float 4s ease-in-out infinite;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Efecto Reveal al pasar el mouse */
+.genesis-visual:hover .floating-icon {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* INFORMACIÓN (Columna Derecha) */
+.genesis-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinear textos a la izquierda */
+    max-width: 500px; /* Que no se estire infinitamente en monitores anchos */
+}
+
+#gen-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px currentColor;
+    /* Color dinámico vía variable */
+    color: var(--sys-primary); 
+}
+
+.separator-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--sys-primary) 0%, transparent 100%);
+    margin: 10px 0 20px 0;
+}
+
+/* TERMINAL LOG BOX */
+.terminal-log-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    width: 100%;
+    margin-bottom: 25px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.log-header {
+    display: flex; gap: 5px; margin-bottom: 8px; align-items: center;
+}
+.log-dot { width: 8px; height: 8px; border-radius: 50%; }
+.log-dot.red { background: #ff5f56; }
+.log-dot.yellow { background: #ffbd2e; }
+.log-dot.green { background: #27c93f; }
+.log-title { margin-left: 10px; color: #666; font-size: 0.7rem; }
+
+.log-body { color: #ccc; min-height: 40px; line-height: 1.4; }
+.prompt-char { color: var(--sys-primary); margin-right: 5px; }
+.cursor-blink { animation: blink 1s infinite; }
+
+/* STATS GRID */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+.stat-box {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+.stat-box .val { color: currentColor; font-weight: bold; margin-top: 5px; font-size: 1rem; }
+
+/* Efecto hover en las stats */
+.stat-box:hover {
+    border-color: var(--sys-primary);
+    box-shadow: 0 0 15px rgba(var(--sys-primary-rgb), 0.2);
+    color: #fff;
+}
+
+/* MONITOR VITAL (ECG) */
+.vital-monitor-container {
+    margin-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+    width: 100%;
+}
+.vital-label { font-size: 0.7rem; color: #555; margin-bottom: 5px; letter-spacing: 1px; }
+
+canvas#vital-graph {
+    width: 100%;
+    height: 50px;
+    display: block; /* Elimina espacios fantasma inline */
+}
+
+/* ANIMACIONES */
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+
+/* =========================================
+   MEDIA QUERY: MÓVILES (Max 768px)
+   Transformación Vertical para Celulares
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. CONTENEDOR PRINCIPAL: De Fila a Columna */
+    .genesis-wrapper {
+        flex-direction: column; /* Apilar verticalmente */
+        gap: 20px; /* Menos espacio entre elementos */
+        padding: 15px 10px; /* Padding reducido */
+        
+        /* Aseguramos que pueda scrollear si el contenido es largo */
+        overflow-y: auto; 
+        justify-content: flex-start; /* Empezar desde arriba */
+        align-items: center;
+    }
+
+    /* 2. VISUAL (El Icono/Lobo) */
+    .genesis-visual {
+        /* Reducimos el tamaño drásticamente para que no robe pantalla */
+        flex: 0 0 160px; 
+        width: 160px;
+        height: 160px;
+        margin-top: 20px; /* Un poco de aire arriba */
+    }
+
+    .floating-icon {
+        width: 130px; /* Icono interno más pequeño */
+    }
+
+    /* 3. INFORMACIÓN (Textos) */
+    .genesis-info {
+        width: 100%; /* Ocupar todo el ancho disponible */
+        max-width: none; /* Quitar límite de ancho de escritorio */
+        align-items: center; /* Centrar textos en móvil se ve mejor */
+        padding-bottom: 40px; /* Espacio extra abajo para que no pegue con el footer */
+    }
+
+    /* Título principal */
+    #gen-title {
+        font-size: 1.8rem; /* Letra más pequeña */
+        text-align: center;
+    }
+
+    /* Consola de logs */
+    .terminal-log-container {
+        font-size: 0.8rem; /* Letra de terminal legible en móvil */
+        min-height: 60px; /* Un poco más compacta */
+    }
+
+    /* 4. GRID DE ESTADÍSTICAS */
+    .stats-grid {
+        /* En vez de 3 columnas, usamos 3 pero más apretadas o 1 si prefieres */
+        /* Aquí mantendremos 3 pero con letra chica para que se vea "tech" */
+        gap: 5px; 
+    }
+
+    .stat-box {
+        padding: 8px 5px;
+    }
+
+    .stat-box .label { font-size: 0.6rem; }
+    .stat-box .val { font-size: 0.9rem; }
+    
+    /* 5. GRÁFICA VITAL */
+    .vital-monitor-container {
+        margin-top: 15px;
+    }
+}

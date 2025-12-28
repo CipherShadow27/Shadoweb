@@ -1,0 +1,394 @@
+/* TRINITY LAYOUT */
+.trinity-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
+    color: #fff;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* HEADER */
+.archive-header { text-align: center; margin-bottom: 30px; }
+.archive-title { 
+    font-family: 'Share Tech Mono', monospace; 
+    font-size: 1.8rem; 
+    letter-spacing: 4px; 
+    color: var(--sys-primary); /* Se adapta al color global */
+    text-shadow: 0 0 10px rgba(var(--sys-primary-rgb), 0.5);
+}
+.archive-subtitle { font-size: 0.9rem; opacity: 0.6; font-style: italic; }
+
+/* GRID DE TARJETAS */
+.cards-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+}
+
+.data-card {
+    width: 280px;
+    background: rgba(10, 10, 10, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.data-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--sys-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* IMAGEN DE LA TARJETA */
+.card-visual {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegura que llenen el cuadro sin deformarse */
+    object-position: center top; /* Centra la imagen priorizando la parte superior (las caras) */
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: grayscale(0.8) contrast(1.2);
+}
+
+/* Efecto al pasar el mouse: Cobra color y vida */
+.data-card:hover .card-img {
+    filter: grayscale(0);
+    transform: scale(1.05);
+}
+
+/* INFO */
+.card-info { padding: 15px; text-align: left; border-top: 1px solid rgba(255,255,255,0.1); }
+.node-id { font-size: 0.6rem; color: #666; letter-spacing: 2px; }
+.node-name { font-size: 1.4rem; margin: 5px 0 15px 0; font-family: 'Share Tech Mono'; }
+
+.access-btn {
+    background: transparent;
+    border: 1px solid var(--sys-primary);
+    color: var(--sys-primary);
+    padding: 5px 15px;
+    font-family: 'Share Tech Mono';
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.access-btn:hover { background: var(--sys-primary); color: #000; }
+
+/* --- MODAL (La ventana emergente) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+/* --- MODAL SPLIT VIEW (CORREGIDO) --- */
+.modal-content {
+    width: 80%;           /* Un poco más ancho para que quepa bien todo */
+    max-width: 1000px;
+    height: 60vh;         /* Altura fija para que se vea imponente */
+    background: #0a0c10;  /* Fondo oscuro sólido */
+    border: 2px solid var(--sys-primary); /* Borde del color de la IA */
+    display: flex;        /* ESTO ES LA CLAVE */
+    flex-direction: row;  /* Obliga a ir de izquierda a derecha */
+    overflow: hidden;     /* Para que nada se salga de la caja */
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    position: relative;
+}
+
+.modal-header {
+    padding: 15px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#modal-title { font-weight: bold; letter-spacing: 2px; color: var(--sys-primary); }
+#close-modal { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+
+/* COLUMNA IZQUIERDA (IMAGEN) */
+.modal-left-col {
+    width: 40%;           /* Ocupa el 40% del ancho */
+    height: 100%;         /* Ocupa toda la altura */
+    position: relative;
+    border-right: 1px solid var(--sys-primary);
+    background: #000;
+    flex-shrink: 0;       /* Evita que se aplaste si hay mucho texto */
+}
+
+#modal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* Cubre todo el espacio sin deformarse */
+    object-position: top center; /* Enfoca las caras */
+    display: block;       /* Elimina espacios fantasma */
+}
+
+/* COLUMNA DERECHA (TEXTO) */
+.modal-right-col {
+    width: 60%;           /* El resto del espacio */
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* El texto va de arriba a abajo */
+    background: rgba(20, 20, 25, 0.95);
+}
+
+.modal-body {
+    padding: 30px;
+    overflow-y: auto;     /* Scroll solo si el texto es muy largo */
+    flex-grow: 1;
+}
+
+.lore-text-container {
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #ddd;
+    white-space: pre-wrap; /* Respeta los saltos de línea del lore */
+}
+
+.lore-meta {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed #444;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Animaciones */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ... (Mantén tus estilos anteriores de .trinity-wrapper, .archive-header, .cards-grid) ... */
+
+/* ESTILO DEL ARCHIVO PROYECTO (Footer) */
+.project-file-container {
+    width: 90%;
+    max-width: 900px;
+    height: 140px; /* Un poco más alta para que luzca el banner */
+    margin-top: 30px;
+    background: linear-gradient(90deg, #050505 0%, #111 100%);
+    border: 1px dashed var(--sys-primary);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-file-container:hover {
+    box-shadow: 0 0 20px rgba(var(--sys-primary-rgb), 0.3);
+    border-style: solid;
+}
+
+.project-visual {
+    width: 30%; /* Ocupa el 30% del ancho de la tarjeta */
+    height: 100%;
+    position: relative;
+    border-right: 1px solid var(--sys-primary);
+    overflow: hidden;
+    flex-shrink: 0; /* Evita que se aplaste si la pantalla es pequeña */
+}
+
+.project-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre todo el espacio sin estirarse */
+    object-position: center center; /* Centra la imagen del lobo */
+    filter: grayscale(1) contrast(1.2);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Efecto Hover */
+.project-file-container:hover .project-visual img { 
+    filter: grayscale(0) contrast(1.1); 
+    transform: scale(1.05); /* Zoom sutil al pasar el mouse */
+}
+
+/* INFO (Derecha) */
+.project-info {
+    flex-grow: 1;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.file-status { color: #ff003c; font-size: 0.7rem; letter-spacing: 2px; }
+.file-name { font-size: 1.5rem; margin: 5px 0; color: #fff; }
+.file-desc { color: #888; font-style: italic; }
+
+/* --- MODAL REDISEÑADO (Split View) --- */
+.modal-content {
+    width: 70%;
+    max-width: 900px;
+    height: 60vh;
+    background: rgba(10, 12, 16, 0.98);
+    border: 1px solid var(--sys-primary);
+    display: flex; /* Dividir en 2 columnas */
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+
+.modal-left-col {
+    width: 40%;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid var(--sys-primary);
+}
+
+#modal-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: sepia(0.2) contrast(1.1);
+}
+
+/* Efecto de escaneo sobre la foto humana */
+.scan-line {
+    position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+    background: var(--sys-primary);
+    box-shadow: 0 0 15px var(--sys-primary);
+    animation: scanDown 3s linear infinite;
+    opacity: 0.5;
+}
+
+.modal-right-col { width: 60%; display: flex; flex-direction: column; }
+.modal-body { padding: 30px; overflow-y: auto; flex-grow: 1; }
+
+@keyframes scanDown { 0% { top: -10%; } 100% { top: 110%; } }
+
+
+/*=========================================*/
+/*     MEDIA QUERY: MÓVILES (Max 768px)    */
+/*   Lista Vertical y Modales Adaptables   */
+/*=========================================*/
+
+@media screen and (max-width: 768px) {
+
+    /* 1. CONTENEDOR PRINCIPAL: Habilitar Scroll */
+    .trinity-wrapper {
+        height: auto; /* Deja que crezca hacia abajo */
+        min-height: 100%;
+        overflow-y: auto; /* Scroll vertical activado */
+        padding-bottom: 100px; /* Espacio extra para llegar al final sin que tape el footer */
+        justify-content: flex-start; /* Empezar desde arriba */
+    }
+
+    /* 2. HEADER: Más compacto */
+    .archive-header {
+        margin-bottom: 15px;
+        margin-top: 15px;
+        padding: 0 10px;
+    }
+
+    .archive-title { font-size: 1.2rem; }
+    .archive-subtitle { font-size: 0.8rem; }
+
+    /* 3. GRID DE TARJETAS -> LISTA VERTICAL */
+    .cards-grid {
+        flex-direction: column; /* Apilar una debajo de otra */
+        width: 45%;
+        padding: 0 25px; /* Margen lateral para que no peguen al borde */
+        gap: 20px;
+    }
+
+    .data-card {
+        width: 100%; /* Ocupar todo el ancho disponible */
+        max-width: 400px; /* Tope para tablets */
+        /* Opcional: Si quieres que la imagen sea más bajita en móvil */
+        display: flex;
+        flex-direction: column; 
+    }
+    
+    .card-visual {
+        height: 35px; /* Imagen más panorámica y corta */
+    }
+    
+    .card-img {
+        object-position: center; /* Enfocar la parte superior de la imagen */
+    }
+
+    /* 4. TARJETA ESPECIAL (Project File) */
+    .project-file-container {
+        flex-direction: column; /* Imagen arriba, texto abajo */
+        height: auto;
+        text-align: center;
+        padding: 5px 0;
+        margin-bottom: 20px;
+    }
+
+    .project-visual {
+        width: 100%; /* Ancho total */
+        height: 140px;
+        margin-bottom: 10px;
+        border-right: none; /* Quitamos borde derecho */
+        border-bottom: 1px solid rgba(255,255,255,0.1); /* Ponemos borde abajo */
+    }
+
+    /* 5. VENTANA MODAL (Lo más importante) */
+    .modal-content {
+        flex-direction: column; /* Cambiar de lado-a-lado a arriba-abajo */
+        width: 90%; /* Casi todo el ancho */
+        height: 80vh; /* Casi toda la altura */
+        margin-top: 20px;
+    }
+
+    /* Parte superior del modal (Imagen) */
+    .modal-left-col {
+        width: 98%;
+        height: 200px; /* Altura fija pequeña para la foto */
+        border-right: none;
+        border-bottom: 2px solid var(--sys-primary);
+        position: relative;
+    }
+
+    /* Ajuste para que se vea bien la cara del personaje */
+    #modal-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Recorta la imagen para llenar el hueco */
+        object-position: center 35%; /*Enfoca*/
+    }
+
+    /* Parte inferior del modal (Texto) */
+    .modal-right-col {
+        width: 90%;
+        height: 90%; /* El resto del espacio */
+        padding: 30px;
+        overflow-y: auto; /* Scroll si el texto es muy largo */
+    }
+
+    /* Ajuste de título para ganar espacio */
+    .modal-header {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .modal-body {
+        font-size: 1.2rem; /* Texto un poco más pequeño para leer mejor */
+    }
+    
+    #modal-title {
+        font-size: 1rem; /* Título que quepa en una línea */
+    }
+}

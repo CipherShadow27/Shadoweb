@@ -1,0 +1,122 @@
+/* =========================================
+   MODULES/LOADERS/CERBERUS/CERBERUS.CSS
+   Gatekeeper de Transición
+   ========================================= */
+
+:root {
+    --red-bright: #ff0033;
+    --red-dim: #550000;
+    --neon-blue: #00f2ff;
+    --green-matrix: #00ff41;
+}
+
+/* El contenedor principal de Cerberus */
+.gatekeeper-backdrop {
+    width: 100%;
+    height: 100%;
+    
+    background: #000;
+
+    /* Centrado interno de los anillos y logos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.core-symbol-wrapper {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px; 
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#gatekeeper-symbol {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px var(--sys-primary));
+}
+
+/* --- ANIMACIONES DE ANILLOS (Sin cambios, solo verificando) --- */
+.ai-core { position: relative; width: 300px; height: 300px; }
+
+.sphere-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    box-shadow: 0 0 15px rgba(255, 0, 50, 0.1);
+}
+
+.ring-1 { width: 100%; height: 100%; animation: rotateAI 4s linear infinite; border-top: 2px solid var(--red-bright); }
+.ring-2 { width: 70%; height: 70%; animation: rotateAI 6s linear infinite reverse; border-bottom: 2px solid var(--neon-blue); }
+.ring-3 { 
+    width: 40%; height: 40%; 
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 50px 20px var(--red-bright);
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes rotateAI {
+    from { transform: translate(-50%, -50%) rotateX(0deg) rotateY(inherit); }
+    to { transform: translate(-50%, -50%) rotateX(360deg) rotateY(inherit); }
+}
+
+@keyframes pulse {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    to { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* BARRA DE PROGRESO Y TEXTO */
+.ui-container {
+    margin-top: 50px;
+    text-align: center;
+    width: 300px;
+    z-index: 20; /* Asegurar que esté por encima del fondo */
+}
+
+.progress-box {
+    width: 100%;
+    height: 4px;
+    background: var(--red-dim);
+    position: relative;
+    margin-top: 15px;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--red-bright);
+    box-shadow: 0 0 20px var(--green-matrix);
+    transition: width 0.2s;
+}
+
+#status-msg {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.scanline {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 50;
+}

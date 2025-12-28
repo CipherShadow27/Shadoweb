@@ -1,0 +1,111 @@
+/* =========================================
+UI/SHARED/GLOBAL.CSS
+Identidad Visual y Variables Maestras
+========================================= */
+
+:root {
+    /* --- PALETA DE IDENTIDAD --- */
+    
+    /* Mañana: PrimeNodeX */
+    --theme-genesis: #00ff41;        /* Verde */
+    --theme-genesis-alt: #ffcc00;    /* Amarillo Alerta */
+
+    /* Tarde: Trinity/XentinelX */
+    --theme-trinity: #00f2ff;        /* Azul Tech */
+    --theme-trinity-alt: #bf00ff;    /* Morado Psíquico */
+
+    /* Noche: CypherX/Cerberus */
+    --theme-cerberus: #ff003c;       /* Rojo Cerberus */
+    --theme-cerberus-alt: #ff8c00;   /* Naranja Cerberus */
+
+    /* Protocolo Institucional */
+    --theme-protocol-1: #00f2ff;
+    --theme-protocol-2: #ff003c;
+    --theme-protocol-3: #00ff41;
+    --theme-protocol-4: #bf00ff;
+    
+    /* Colores Base por defecto (se sobrescriben dinámicamente) */
+    --sys-primary: var(--theme-protocol-1);
+    --sys-secondary: #000;
+}
+
+/* --- REGLAS DE COMPORTAMIENTO DINÁMICO --- */
+
+/* Kernel en GENESIS */
+body[data-active-env="genesis"] {
+    --primary: var(--theme-genesis);
+    --secondary: var(--theme-genesis-alt);
+}
+
+/* Kernel en TRINITY */
+body[data-active-env="trinity"] {
+    --primary: var(--theme-trinity-alt); /* Morado predominante */
+    --secondary: var(--theme-trinity);
+}
+
+/* Kernel en CERBERUS */
+body[data-active-env="cerberus"] {
+    --primary: var(--theme-cerberus);
+    --secondary: var(--theme-cerberus-alt);
+}
+
+/* Kernel en PROTOCOL */
+body[data-active-env="protocol"] {
+    --primary: var(--theme-protocol-1);
+    --secondary: var(--theme-protocol-2);
+}
+
+/* Aplicación dinámica al Chasis */
+#terminal-chassis {
+    border: 2px solid var(--sys-primary) !important;
+    box-shadow: 
+        0 0 15px rgba(var(--sys-primary-rgb), 0.3), 
+        inset 0 0 20px rgba(var(--sys-primary-rgb), 0.1);
+    transition: all 0.5s ease; /* Transición suave de colores */
+}
+
+/* Contenedor del Header */
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Logo izquierda, botones derecha */
+    align-items: center;
+    padding: 10px 25px;
+    border-bottom: 1px solid rgba(var(--sys-primary-rgb), 0.3);
+}
+
+/* Estilo del Logo en el Header */
+.header-logo {
+    height: 38px;
+    filter: drop-shadow(0 0 5px var(--sys-primary));
+    margin-right: 15px;
+}
+
+.sys-title {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--sys-primary);
+    letter-spacing: 4px;
+    font-size: 1.1rem;
+}
+
+/* Botones con más "Luz" */
+.nav-btn {
+    background: rgba(0, 0, 0, 0.45  ); /* Menos opaco para ver el fondo */
+    color: var(--sys-primary);
+    border: 1px solid var(--sys-primary);
+    padding: 8px 20px;
+    margin-left: 10px; /* Separación entre botones */
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(var(--sys-primary-rgb), 0.2);
+    text-shadow: 0 0 8px var(--sys-primary);
+}
+
+.nav-btn:hover {
+    background: var(--sys-primary);
+    color: #000;
+    box-shadow: 0 0 20px var(--sys-primary);
+    text-shadow: 0 0 5px #060000e3; /* Efecto consola al pasar el mouse */
+
+}
+

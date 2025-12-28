@@ -1,0 +1,239 @@
+/*UI/SHELL/TERMINAL.CSS Estructura Física y Layout del Chasis*/
+:root {
+    --term-border: 2px solid var(--sys-primary);
+    --term-glow: 0 0 15px rgba(0, 242, 252, 0.3);
+    --bg-overlay: rgba(2, 2, 2, 0.85);   
+    --sys-primary: #00f2ff; 
+    --sys-secondary: #000;
+    
+    /* Espacio seguro del borde de la pantalla */
+    --screen-gap: 10px; 
+}
+
+body {
+    font-family: monospace, sans-serif;
+    background: #000 url('/assets/img/background/bck_main.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; 
+    perspective: 1500px;
+    
+    /* CENTRADO MAESTRO: Esto centra el chasis en la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Efecto de monitor antiguo */
+.system-monitor::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 20%, #10000019 100%);
+    pointer-events: none;
+    z-index: 999; /* Por encima de todo */
+}
+
+/* --- EL CHASIS (Contenedor Principal) --- */
+#terminal-chassis {
+    position: relative; /* Necesario para los LEDs */
+    
+    /* CÁLCULO DE TAMAÑO: Pantalla completa menos el borde pequeño */
+    width: calc(100vw - var(--screen-gap)); 
+    height: calc(100vh - var(--screen-gap));
+    
+    /* Estética */
+    border: 2px solid var(--sys-primary) !important;
+    background: rgba(5, 7, 10, 0.85); 
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 0 15px rgba(var(--sys-primary-rgb), 0.3), 
+        inset 0 0 20px rgba(var(--sys-primary-rgb), 0.1);
+    
+    /* LAYOUT INTERNO: Flexbox Vertical */
+    display: flex;
+    flex-direction: column; /* Apila: Header -> Viewport -> Footer */
+    
+    /* Esquinas recortadas (Cyberpunk) */
+    clip-path: polygon(
+        15px 0, calc(100% - 15px) 0, 100% 15px, 
+        100% calc(100% - 15px), calc(100% - 15px) 100%, 
+        15px 100%, 0 calc(100% - 15px), 0 15px
+    );
+    
+    transition: border-color 0.8s ease, box-shadow 0.8s ease; 
+}
+
+/* Decoración de esquinas */
+#terminal-chassis::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 15px; height: 15px;
+    border-top: 2px solid var(--sys-secondary);
+    border-left: 2px solid var(--sys-secondary);
+    z-index: 20;
+}
+
+/* --- ÁREA DE CONTENIDO (VIEWPORT) --- */
+#process-viewport {
+    /* MAGIA: Ocupa todo el espacio disponible */
+    flex: 1; 
+    
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Scroll solo si es necesario dentro del contenido */
+    overflow: hidden; 
+    
+    /* Estética interna */
+    margin: 5px; /* Margen mínimo interno */
+    padding: 10px;
+    background: radial-gradient(circle at 50% 40%, rgba(var(--sys-primary-rgb), 0.08) 0%, transparent 70%);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Decoración de fondo del viewport */
+#process-viewport::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, var(--sys-primary) 0%, transparent 35%);
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- FOOTER (Ahora es parte del flujo) --- */
+#sys-footer {
+    /* Flex item: no crece, no se encoge, altura automática */
+    flex: 0 0 34px; 
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 2px solid var(--sys-primary);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    
+    /* Quitamos position absolute para que no tape contenido */
+    position: relative; 
+    width: 100%;
+    z-index: 100;
+}
+
+/* Bloques del footer */
+.footer-block { display: flex; align-items: center; gap: 15px; }
+.footer-block.left { flex: 1; }
+.footer-block.center { flex: 2; justify-content: center; }
+.footer-block.right { flex: 1; justify-content: flex-end; }
+
+/* Textos Footer */
+.corp-id { font-weight: bold; color: #fff; letter-spacing: 1px; }
+.div-id { color: #666; letter-spacing: 1px; }
+.sys-status { 
+    color: var(--sys-primary); 
+    opacity: 0.8;
+    padding-left: 15px;
+    border-left: 1px solid #333;
+}
+
+/* --- ESTILOS ADICIONALES (Botones y Redes) --- */
+.nav-btn:hover {
+    color: var(--primary); /* Asegura que tome la variable global */
+    border-bottom: 2px solid var(--secondary);
+}
+
+.nav-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+    background: #050505;
+}
+
+.social-grid { display: flex; gap: 20px; }
+.social-icon {
+    width: 18px; height: 18px;
+    color: #555;
+    transition: all 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.social-icon svg { width: 100%; height: 100%; }
+.social-icon:hover {
+    color: var(--sys-primary);
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 5px var(--sys-primary));
+}
+
+#clock { color: #888; letter-spacing: 1px; }
+
+/* ========================================= */
+/*      MEDIA QUERY: MÓVILES (Max 768px)     */
+/*Ajustes para celulares y tablets verticales*/
+/* ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. CHASIS: Aprovechar cada píxel */
+    #terminal-chassis {
+        width: 100vw;  /* Ancho total */
+        height: 100vh; /* Alto total */
+        border-width: 0.8px !important; /* Borde más fino */
+        
+        /* Reducimos el recorte de esquinas para ganar espacio */
+        clip-path: polygon(
+            0 0, 100% 0, 100% 100%, 0 100%
+        ); 
+    }
+    
+    /* Quitamos el adorno de esquina superior izquierda */
+    #terminal-chassis::before { display: none; }
+    
+    /* 2. HEADER: Más compacto */
+    .header-content {
+        padding: 5px 10px; /* Menos relleno */
+    }
+    
+    .header-logo { height: 30px; } /* Logo más pequeño */
+    
+    .sys-title { 
+        font-size: 0.8rem; 
+        letter-spacing: 1px; 
+    }
+    
+    /* Ocultamos botones de ventana (Min/Max/Close) si solo son decorativos en móvil */
+    .window-controls { display: none; } 
+
+    /* 3. VIEWPORT: Márgenes mínimos */
+    #process-viewport {
+        margin: 0;
+        border: none; /* Quitamos bordes internos para limpieza */
+    }
+
+    /* 4. FOOTER: Simplificado */
+    #sys-footer {
+        padding: 0 10px;
+        font-size: 0.5rem;
+        height: 30px;
+    }
+    
+    /* En móvil, el espacio es oro. Ocultamos el bloque central (status) 
+       para dejar espacio a la hora y al ID */
+    .footer-block.center {
+        display: none;
+    }
+    
+    .footer-block.left { flex: 1; }
+    .footer-block.right { flex: 1; text-align: right; }
+}

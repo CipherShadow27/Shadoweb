@@ -1,0 +1,276 @@
+/* LAYOUT PRINCIPAL */
+.protocol-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 10, 0.95);
+    overflow: hidden;
+    animation: slideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* SIDEBAR */
+.protocol-sidebar {
+    width: 280px;
+    background: rgba(0, 0, 0, 0.6);
+    border-right: 1px solid var(--sys-primary);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.corp-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 50px;
+}
+
+.corp-logo { width: 50px; opacity: 0.8; }
+.corp-name { 
+    font-family: 'Share Tech Mono'; 
+    font-size: 1.2rem; 
+    line-height: 1.1; 
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+/* MENÚ DE NAVEGACIÓN */
+.dossier-menu { display: flex; flex-direction: column; gap: 15px; flex-grow: 1; }
+
+.menu-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #888;
+    padding: 12px 20px;
+    text-align: left;
+    font-family: 'Share Tech Mono';
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-btn:hover, .menu-btn.active {
+    border-color: var(--sys-primary);
+    color: var(--sys-primary);
+    background: rgba(var(--sys-primary-rgb), 0.1);
+    transform: translateX(5px);
+}
+
+.btn-icon { font-size: 0.8rem; opacity: 0.5; }
+
+.security-badge {
+    font-size: 0.7rem;
+    color: #555;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    font-family: monospace;
+}
+.blink { animation: blink 2s infinite; color: var(--sys-primary); }
+
+/* CONTENIDO PRINCIPAL */
+.protocol-content {
+    flex-grow: 1;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header { margin-bottom: 40px; }
+#section-title { 
+    font-size: 2.5rem; 
+    color: #fff; 
+    margin: 0; 
+    text-transform: uppercase; 
+    letter-spacing: 3px;
+}
+.decor-line { 
+    width: 100px; height: 4px; 
+    background: var(--sys-primary); 
+    margin-top: 10px; 
+}
+
+/* CUERPO (Grid 60/40) */
+.content-body {
+    display: flex;
+    gap: 50px;
+    height: 100%;
+}
+
+.text-column {
+    flex: 1.5;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+    overflow-y: auto;
+    padding-right: 20px;
+}
+
+.visual-column {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Mantiene el centrado horizontal */
+    
+    /* CAMBIO CLAVE: */
+    /* Antes: align-items: center; (Esto la bajaba mucho) */
+    /* Ahora: align-items: flex-start; (La sube al tope) */
+    align-items: flex-start;
+    
+    /* AJUSTE: Le damos un margen superior para colocarla en el "punto dulce" visual */
+    /* Puedes ajustar este 60px si la quieres más arriba o más abajo */
+    padding-top: 60px; 
+}
+
+/* OPCIONAL: Si quieres que la imagen tenga un poco más de presencia */
+.holo-projector {
+    width: 100%;
+    max-width: 350px; /* Aumentado ligeramente de 300 a 350px */
+    position: relative;
+}
+
+/* HOLOGRAMA */
+.holo-projector {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+}
+
+#section-img {
+    width: 100%;
+    filter: drop-shadow(0 0 15px var(--sys-primary)) opacity(0.8);
+    animation: float 4s ease-in-out infinite;
+}
+
+.scan-grid {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(var(--sys-primary-rgb), 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--sys-primary-rgb), 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    mask-image: radial-gradient(circle, black 40%, transparent 80%);
+    pointer-events: none;
+}
+
+/* ANIMACIONES */
+@keyframes slideIn { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes glitch-float {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(-10px); opacity: 0.8; filter: grayscale(100%) blur(5px); }
+    55% { filter: grayscale(0%) blur(0px); opacity: 0.3; transform: skewX(10deg); }
+}
+
+/* =========================================
+   MEDIA QUERY: MÓVILES (Max 768px)
+   De Sidebar a Menú Superior (Tabs)
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. LAYOUT PRINCIPAL: Columna Vertical */
+    .protocol-wrapper {
+        flex-direction: column; /* Apilar verticalmente */
+        overflow-y: auto; /* Permitir scroll en toda la página */
+        overflow-x: hidden; /* Evitar scroll lateral accidental */
+    }
+
+    /* 2. TRANSFORMACIÓN DEL SIDEBAR (Menú) */
+    .protocol-sidebar {
+        width: 100%; /* Ahora ocupa todo el ancho */
+        height: auto; /* Altura automática (se ajusta al contenido) */
+        min-height: 60px;
+        
+        flex-direction: row; /* Elementos en fila horizontal */
+        align-items: center;
+        padding: 10px;
+        
+        border-right: none; /* Quitamos la línea de la derecha */
+        border-bottom: 1px solid var(--sys-primary); /* Ponemos línea abajo */
+        background: rgba(0,0,0,0.95); /* Fondo casi sólido para leer bien */
+        
+        flex-shrink: 0; /* Evita que se aplaste */
+        z-index: 100; /* Que quede por encima si haces scroll */
+    }
+
+    /* Logo más pequeño y compacto */
+    .corp-header {
+        margin-bottom: 0; /* Quitamos margen inferior */
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+    .corp-logo { width: 30px; } /* Logo pequeñito */
+    .corp-name { display: none; } /* Ocultamos el nombre "BIGSHADOW LABS" para ganar espacio */
+
+    /* 3. MENÚ DE NAVEGACIÓN (Scroll Horizontal) */
+    .dossier-menu {
+        flex-direction: row; /* Botones uno al lado del otro */
+        overflow-x: auto; /* Scroll horizontal (deslizar con el dedo) */
+        gap: 10px;
+        padding-bottom: 0;
+        width: 100%;
+        
+        /* Ocultar barra de scroll fea en Chrome/Safari */
+        scrollbar-width: none; 
+    }
+    .dossier-menu::-webkit-scrollbar { display: none; }
+
+    .menu-btn {
+        white-space: nowrap; /* Que el texto no se rompa en dos líneas */
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        flex-shrink: 0; /* Asegura que el botón mantenga su tamaño */
+    }
+    
+    /* Estado activo en móvil */
+    .menu-btn.active {
+        background: var(--sys-primary);
+        color: #000;
+        border-color: var(--sys-primary);
+    }
+    
+    /* Ocultamos la badge de seguridad en móvil (ocupa mucho espacio) */
+    .security-badge { display: none; }
+
+    /* 4. CONTENIDO PRINCIPAL */
+    .protocol-content {
+        padding: 20px;
+        height: auto; /* Que crezca según el texto */
+        overflow: visible; 
+    }
+
+    .content-body {
+        flex-direction: column-reverse; /* Imagen ARRIBA (o abajo), Texto al otro lado */
+        /* Nota: column-reverse pone el 2do elemento (visual) primero visualmente si está definido después en HTML.
+           Si quieres la imagen arriba del texto, usa 'column-reverse' si en tu HTML la imagen está al final. */
+        gap: 20px;
+    }
+
+    /* Texto */
+    .text-column {
+        width: 100%;
+        font-size: 0.9rem;
+        padding-right: 0;
+        /* Quitamos el overflow interno porque ahora scrollea toda la página */
+        overflow-y: visible; 
+        max-height: none;
+    }
+
+    /* Imagen Holográfica */
+    .visual-column {
+        width: 100%;
+        padding-top: 0; /* Reseteamos el padding de escritorio */
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .holo-projector {
+        max-width: 180px; /* Holograma más pequeño para no estorbar */
+    }
+}
